@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import ScheduleVue from './components/Schedule';
 import { format } from 'react-string-format';
 
 
@@ -10,15 +11,6 @@ function HomeVue() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Bonjour {name} !</Text>
-    </View>
-  );
-}
-
-
-function ScheduleVue() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Programme de la journée</Text>
     </View>
   );
 }
@@ -46,7 +38,7 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen name="Accueil" component={HomeVue} />
-        <Tab.Screen name="Programme" component={ScheduleVue} />
+        <Tab.Screen name="Programme" component={ScheduleVue}/>
         <Tab.Screen name="Progrès" component={ProgressVue} />
         <Tab.Screen name="Stats" component={StatsVue} />
       </Tab.Navigator>
