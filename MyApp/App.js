@@ -3,33 +3,10 @@ import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ScheduleVue from './components/Schedule';
+import HomeVue from './components/Home';
+import StatsVue from './components/Stats';
+import ProgressVue from './components/Progress';
 import { format } from 'react-string-format';
-
-
-const name = "Alexandre";
-function HomeVue() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Bonjour {name} !</Text>
-    </View>
-  );
-}
-
-function ProgressVue() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
-
-function StatsVue() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>!</Text>
-    </View>
-  );
-}
 
 const Tab = createBottomTabNavigator();
 

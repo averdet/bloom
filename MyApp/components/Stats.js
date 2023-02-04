@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
 
-function ScheduleVue() {
+function StatsVue() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Programme de la journée</Text>
+        <Text>!</Text>
       </View>
     );
   }
 
-export default ScheduleVue;
+export default StatsVue;
