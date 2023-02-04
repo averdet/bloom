@@ -1,41 +1,24 @@
 import * as React from 'react';
-import { Button, View, Text } from 'react-native';
+import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import ScheduleVue from './components/Schedule';
+import HomeVue from './components/Home';
+import StatsVue from './components/Stats';
+import ProgressVue from './components/Progress';
+import { format } from 'react-string-format';
 
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Home Screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
-      />
-    </View>
-  );
-}
+const Tab = createBottomTabNavigator();
 
-function DetailsScreen() {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Details Screen</Text>
-    </View>
-  );
-}
-
-
-
-const Stack = createNativeStackNavigator();
-
-function App() {
+export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-      </Stack.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen name="Accueil" component={HomeVue} />
+        <Tab.Screen name="Programme" component={ScheduleVue}/>
+        <Tab.Screen name="Progrès" component={ProgressVue} />
+        <Tab.Screen name="Stats" component={StatsVue} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
-
-export default App;
