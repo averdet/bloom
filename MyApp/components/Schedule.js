@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
-import Timeline from 'react-native-timeline-flatlist'
+import Timeline from 'react-native-timeline-flatlist';
 
 function ScheduleVue() {
     return(
