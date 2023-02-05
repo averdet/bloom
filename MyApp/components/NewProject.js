@@ -5,7 +5,7 @@ import axios from 'axios'
 
 function ProjectVue({ navigator }) {
 
-  const apiKey = "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";
+  const apiKey = "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";
   const apiUrl = "https://api.openai.com/v1/engines/text-davinci-003/completions";
   const [data, setData] = useState([]);
   const [textInput, setTextInput] = useState('');
@@ -84,7 +84,8 @@ function ProjectVue({ navigator }) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <KeyboardAvoidingView 
-            style={styles.writeTaskWrapper}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.writeTaskWrapper}
         >
             <TextInput style={styles.input} placeholder={'Décris ton projet'} value={textInput} onChangeText={text => setTextInput(text)}/>
             <TouchableOpacity onPress={() => handleCheckSend()}>
