@@ -8,24 +8,41 @@ import {
   RefreshControl,
   ActivityIndicator
 } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ProjectVue from './NewProject';
-import Slider from '@react-native-community/slider';
 import { Button } from 'react-native-elements';
+import { Form, FormItem } from 'react-native-form-component';
 
 class NewTaskVue extends Component {
 
   render() {
+      var nameImput
+      var beginingHourInput
+      var periodInput
       return (
           <View style={styles.container}>
-
-              <Button
-                title="Enregistrer"
-                buttonStyle={{backgroundColor:"#ffd400"}}
-                onPress={title => {
-                  this.props.navigation.goBack();
-                }}
-              />
+              <Form onButtonPress={() => {this.props.navigation.goBack();}}
+              buttonStyle={{colorBackground: '#ffd400'}}>
+                <FormItem 
+                label="Nom de la tâche"
+                isRequired
+                onChangeText={(name) => setName(name)}
+                asterik
+                ref={nameImput}
+                />
+                <FormItem 
+                label="Heure de début"
+                isRequired
+                onChangeText={(hour) => setHour(hour)}
+                asterik
+                ref={beginingHourInput}
+                />
+                <FormItem 
+                label="Duŕee"
+                isRequired
+                onChangeText={(period) => setPeriod(period)}
+                asterik
+                ref={periodInput}
+                />
+              </Form>
           </View>
       );
   }
