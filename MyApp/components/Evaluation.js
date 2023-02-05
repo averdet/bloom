@@ -13,6 +13,28 @@ import ProjectVue from './NewProject';
 import Slider from '@react-native-community/slider';
 import { Button } from 'react-native-elements';
 
+const getData = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('@eventsData')
+    return jsonValue;
+  } catch(e) {
+    console.log("Data not extracted")
+    // error reading value
+  }
+  console.log("Data extracted")
+}
+
+const storeData = async (value) => {
+  try {
+    const jsonValue = JSON.stringify(value)
+    await AsyncStorage.setItem('@eventsData', jsonValue)
+  } catch (e) {
+    // saving error
+  }
+  console.log("Data stored")
+}
+
+
 class EvaluationVue extends Component {
   state = {
       value: 0.2,
@@ -21,9 +43,12 @@ class EvaluationVue extends Component {
   percent(value){
     return value*100;
   }
-  
 
   render() {
+    const { route } = this.props;
+    //console.log(route.params);
+    //var data = route.params.data;
+    //console.log(data);
       return (
           <View style={styles.container}>
               <Slider
@@ -31,32 +56,40 @@ class EvaluationVue extends Component {
                     minimumTrackTintColor="#d14ba6"
                     // thumbStyle={customStyles4.thumb}
                     // trackStyle={customStyles4.track}
+                    value={route.params.data.achievement/100}
                     achievement={this.state.achievement}
                     onValueChange={(achievement) => this.setState({ achievement })}
                 />
-              <Text>Achievement: {this.percent(this.state.achievement)}%</Text>
+              <Text>Achievement: {Math.round(this.percent(this.state.achievement))}%</Text>
               <Slider
                     animateTransitions
                     minimumTrackTintColor="#d14ba6"
                     // thumbStyle={customStyles4.thumb}
                     // trackStyle={customStyles4.track}
+                    value={route.params.data.fatigue/100}
                     fatigue={this.state.fatigue}
                     onValueChange={(fatigue) => this.setState({ fatigue })}
                 />
-              <Text>Fatigue: {this.percent(this.state.fatigue)}%</Text>
+              <Text>Fatigue: {Math.round(this.percent(this.state.fatigue))}%</Text>
               <Slider
                     animateTransitions
                     minimumTrackTintColor="#d14ba6"
                     // thumbStyle={customStyles4.thumb}
                     // trackStyle={customStyles4.track}
+                    value={route.params.data.productivity/100}
                     productivity={this.state.productivity}
                     onValueChange={(productivity) => this.setState({ productivity })}
                 />
-              <Text>Productivity: {this.percent(this.state.productivity)}%</Text>
+              <Text>Productivity: {Math.round(this.percent(this.state.productivity))}%</Text>
               <Button
                 title="Enregistrer"
                 buttonStyle={{backgroundColor:"#ffd400"}}
                 onPress={title => {
+                  route.params.data.achievement=Math.round(this.percent(this.state.achievement));
+                  route.params.data.fatigue=Math.round(this.percent(this.state.fatigue));
+                  route.params.data.productivity=Math.round(this.percent(this.state.productivity));
+                  route.params.data.completed=true;
+                  route.params.data.title += ' ✅';
                   this.props.navigation.goBack();
                 }}
               />

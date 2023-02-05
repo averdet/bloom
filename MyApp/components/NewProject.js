@@ -1,22 +1,21 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, Button } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, Button, ActivityIndicator } from 'react-native';
 import axios from 'axios'
 
 function ProjectVue({ navigator }) {
-  const apiKey = "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";
+  const apiKey = require('../API_KEYS.json').OPENAI_API_KEY;
   const apiUrl = "https://api.openai.com/v1/engines/text-davinci-003/completions";
-  const [data, setData] = useState([]);
   const [textInput, setTextInput] = useState('');
   const [textOutput, setTextOutput] = useState('');
   const [promptResponse, setPromptResponse] = useState('');
   const [events, setEvents] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCheckSend = async () => {
+    setIsLoading(true);
     setPromptResponse('');
     const prompt = `Une reformulation synthétique en une seule phrase du projet suivant ${textInput} est `;
-    console.log(prompt);
     const response = await axios.post(apiUrl, {
       prompt: prompt,
       max_tokens: 216,
@@ -29,20 +28,19 @@ function ProjectVue({ navigator }) {
     });
     const text = response.data.choices[0].text;
     setTextOutput(text)
-    console.log(`API Call Reponse: ${text}`)
-    setData([...data, {type: 'user', 'text': textInput}, {type: 'bot', 'text': textInput}]);
     setTextInput('');
+    setIsLoading(false);
   };
 
   const handleObjectiveSend = async () => {
+    setIsLoading(true);
     setPromptResponse('');
     const prompt = `Pour atteindre l'objectif suivant ${textOutput}, un bon planning habdomadaire est le suivant, avec les durées horaires à consacrer. 
     En appliquant le format suivant: Lundi :\n - activité 1 (durée XXhXX)\n - activité 2 (durée XXhXX)\n Mardi :\n - activité 1 (durée XXhXX)\n - activité 2 (durée XXhXX)\n etc.`;
-    console.log(prompt);
     const response = await axios.post(apiUrl, {
       prompt: prompt,
       max_tokens: 1024,
-      temperature: 0.3,
+      temperature: 0.1,
     }, {
       headers: {
         'Content-Type': 'application/json',
@@ -51,18 +49,17 @@ function ProjectVue({ navigator }) {
     });
     const text = response.data.choices[0].text;
     setPromptResponse(text)
-    console.log(`API Call Reponse: ${text}`)
-    setData([...data, {type: 'user', 'text': textInput}, {type: 'bot', 'text': textInput}]);
     setTextInput('');
+    setIsLoading(false);
   };
 
   const extractEvents = () => {
-    const timeRegexp = /([0-1]?[0-9]|2[0-3])h[0-5][0-9]/;
-    const wordList = promptResponse.split("/");
-    console.log(wordList);
+    //console.log(promptResponse);
+    const timeRegexp = /([0-1]?[0-9]|2[0-3])h([0-5][0-9])?/;
+    const wordList = promptResponse.split(/(?=[A-Z])/);
     const dayIndexes = [-1, -1, -1, -1, -1, -1, -1];
     for (let i = 0; i < wordList.length; i++) {
-      wordList[i] = wordList[i].trim();
+      wordList[i] = wordList[i].replace("\n", "").replace(" :- ", "").replace("- ", "").replace(" : ", "");
       if (wordList[i] == "Lundi") {dayIndexes[0] = i}
       else if (wordList[i] == "Mardi") {dayIndexes[1] = i}
       else if (wordList[i] == "Mercredi") {dayIndexes[2] = i}
@@ -71,16 +68,24 @@ function ProjectVue({ navigator }) {
       else if (wordList[i] == "Samedi") {dayIndexes[5] = i}
       else if (wordList[i] == "Dimanche") {dayIndexes[6] = i}
     }
+/*     console.log(wordList);
+    console.log(dayIndexes); */
+
     for (let j = 0; j < dayIndexes.length; j++) {
-      events.push({
-        'day': wordList[dayIndexes[j]],
-        'duration': wordList.slice(dayIndexes[j]+1,dayIndexes[j+1]).join().match(timeRegexp),
-        'activity': wordList.slice(dayIndexes[j]+1,dayIndexes[j+1]).join(),
-      })
+      for (let k = dayIndexes[j]+1; k < dayIndexes[j+1]; k++) {
+        events.push({
+          'day': wordList[dayIndexes[j]],
+          'activity': wordList[k],
+          'duration': wordList[k].match(timeRegexp)[0],
+        })
+      }
     }
+    console.log(events);
   };
 
+
     return (
+      <>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         {textOutput.length < 1 ? null :
         <View style={styles.outputWrapper}>
@@ -96,7 +101,7 @@ function ProjectVue({ navigator }) {
           {promptResponse.length < 1 ? <Button
                 title="C'est bien mon objectif"
                 color='green'
-                onPress={() => handleObjectiveSend()}
+                onPress={() => {isLoading ? null : handleObjectiveSend()}}
               />:
               <View>
               <Button
@@ -107,7 +112,7 @@ function ProjectVue({ navigator }) {
               <Button
                 title="Regénérer un horaire"
                 color='red'
-                onPress={() => handleObjectiveSend()}
+                onPress={() => {isLoading ? null : handleObjectiveSend()}}
               /></View> }
 
             </View>}
@@ -116,13 +121,17 @@ function ProjectVue({ navigator }) {
           style={styles.writeTaskWrapper}
         >
             <TextInput style={styles.input} placeholder={'Décris ton projet'} value={textInput} onChangeText={text => setTextInput(text)}/>
-            <TouchableOpacity onPress={() => handleCheckSend()}>
+            <TouchableOpacity onPress={() => {isLoading ? null : handleCheckSend()}}>
             <View style={styles.submitButton}>
                 <Text style={styles.addText}>✓</Text>
             </View>
             </TouchableOpacity>
         </KeyboardAvoidingView>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        {isLoading && <ActivityIndicator size="large" />}
       </View>
+      </View>
+      </>
     );
   };
 

@@ -48,10 +48,10 @@ function eventsToParsed(){
   var data=[]
   for (var i = 0; i < json_length; i++) {
     if (json[i].description!=undefined){
-      data.push({"time":json[i].start.dateTime.slice(11,16),"title":json[i].summary,"description":json[i].description})
+      data.push({"time":json[i].start.dateTime.slice(11,16),"title":json[i].summary,"description":json[i].description,achievement:0,fatigue:0,productivity:0,"completed":false})
     }
     else{
-      data.push({"time":json[i].start.dateTime.slice(11,16),"title":json[i].summary,"description":""})
+      data.push({"time":json[i].start.dateTime.slice(11,16),"title":json[i].summary,"description":"",achievement:0,fatigue:0,productivity:0,"completed":false})
     }
    }
    return data;
@@ -107,7 +107,6 @@ export class ScheduleVue extends Component {
     setTimeout(() => {
       //refresh to initial data
       this.setState({
-        data: eventsToParsed(),
         isRefreshing: false
       });
     }, 2000);
@@ -133,6 +132,16 @@ renderFooter() {
     }
   }
 
+  stateTask = function(completed) {
+    if (completed){
+      return {backgroundColor: '#541388',innerCircle: 'none'}
+    }
+    else {
+      return {backgroundColor: '#541388',innerCircle: 'dot'}
+    }
+  }
+
+
   render() {
     return (
       <View style={styles.container}>
@@ -143,13 +152,15 @@ renderFooter() {
           style={styles.list}
           data={this.state.data}
           circleSize={20}
-          circleColor= {this.stateTask(this.state.data.time).backgroundColor}
+          circleColor={(item) => {stateTask(item.completed).backgroundColor}}
+          innerCircle={(item) => item.completed ? 'dot' : 'none'}
           lineColor='#2e294e'
           timeContainerStyle={{minWidth:52, marginTop: -5}}
           timeStyle={{textAlign: 'center', backgroundColor:'#595959', color:'white', padding:5, borderRadius:13}}
           descriptionStyle={{color:'gray'}}
-          onEventPress={name => {
-            this.props.navigation.navigate("Evaluation");
+          onEventPress={(item) => {
+            console.log(item.completed);
+            this.props.navigation.navigate("Evaluation", {data: item});
           }}
           options={{
             style:{paddingTop:5},
@@ -162,14 +173,6 @@ renderFooter() {
             renderFooter: this.renderFooter,
             onEndReached: this.onEndReached
           }}
-          innerCircle={this.stateTask().innerCircle}
-        />
-        <FloatingAction
-        actions={actions}
-        color='#541388'
-        onPressItem={name => {
-          this.props.navigation.navigate("Nouvelle tache unitaire");
-        }}
         />
       </View>
     );
