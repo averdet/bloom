@@ -13,6 +13,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProjectVue from './NewProject';
 import EvaluationVue from './Evaluation.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FloatingAction } from "react-native-floating-action";
+import NewTaskVue from './NewTaskVue.js'
 
 const storeData = async (value) => {
   try {
@@ -83,6 +85,20 @@ export class ScheduleVue extends Component {
       }
     ];
   } 
+
+  stateTask = function(time) {
+    var timePassed = false
+    var isUncompleted = false
+    if (timePassed && !isUncompleted){
+      return {backgroundColor: '#541388',innerCircle: 'none'}
+    }
+    else if (timePassed && isUncompleted){
+      return {backgroundColor: '#ffd400',innerCircle: 'none'}
+    }
+    else {
+      return {backgroundColor: '#541388',innerCircle: 'dot'}
+    }
+  }
 
   onRefresh(){
     console.log(getData());
@@ -163,6 +179,16 @@ renderFooter() {
   }
 }
 
+const actions = [
+  {
+    text: "Nouvelle tâche unitaire",
+    icon: require("../images/ic_accessibility_white.png"),
+    name: "bt_language",
+    position: 2,
+    color: '#541388'
+  }
+];
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -172,7 +198,7 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     marginTop:20,
-  },
+  }
 });
 
 const text = StyleSheet.compose(page.title);
@@ -186,6 +212,7 @@ function ScheduleStackVue() {
     <ScheduleStack.Navigator>
       <ScheduleStack.Screen name="Programme" component={ScheduleVue} />
       <ScheduleStack.Screen name="Evaluation" component={EvaluationVue} />
+      <ScheduleStack.Screen name="Nouvelle tache unitaire" component={NewTaskVue}/>
     </ScheduleStack.Navigator>
   );
 }
