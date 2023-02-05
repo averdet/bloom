@@ -30,7 +30,7 @@ function DefaultHomeVue({ navigation }) {
       <Text style={homeStyle.subtitle}>Prête à atteindre tes objectifs ?</Text>
       <FloatingAction
         actions={actions}
-        style={{backgoundColor:'red'}}
+        color='#d90368'
         onPressItem={name => {
           navigation.navigate("Nouveau Projet");
         }}
