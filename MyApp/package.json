@@ -21,6 +21,8 @@
     "jquery": "^3.6.3",
     "react": "18.1.0",
     "react-native": "0.70.5",
+    "react-native-date-picker": "^4.2.6",
+    "react-native-elements": "^3.4.3",
     "react-native-floating-action": "^1.22.0",
     "react-native-form-component": "^2.6.8",
     "react-native-progress": "^5.0.0",
