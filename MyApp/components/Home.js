@@ -14,13 +14,15 @@ function DefaultHomeVue({ navigation }) {
       text: "Nouveau projet",
       icon: require("../images/ic_accessibility_white.png"),
       name: "bt_accessibility",
-      position: 1
+      position: 1,
+      color: '#541388'
     },
     {
       text: "Nouvelle tâche unitaire",
       icon: require("../images/ic_accessibility_white.png"),
       name: "bt_language",
-      position: 2
+      position: 2,
+      color: '#541388'
     }
   ];
   return (
@@ -30,7 +32,7 @@ function DefaultHomeVue({ navigation }) {
       <Text style={homeStyle.subtitle}>Prête à atteindre tes objectifs ?</Text>
       <FloatingAction
         actions={actions}
-        color='#d90368'
+        color='#541388'
         onPressItem={name => {
           navigation.navigate("Nouveau Projet");
         }}
