@@ -31,24 +31,28 @@ class EvaluationVue extends Component {
                     minimumTrackTintColor="#d14ba6"
                     // thumbStyle={customStyles4.thumb}
                     // trackStyle={customStyles4.track}
-                    value={this.state.value}
-                    onValueChange={(value) => this.setState({ value })}
+                    achievement={this.state.achievement}
+                    onValueChange={(achievement) => this.setState({ achievement })}
                 />
-              <Text>Achievement: {this.percent(this.state.value)} %</Text>
+              <Text>Achievement: {this.percent(this.state.achievement)}%</Text>
               <Slider
                     animateTransitions
                     minimumTrackTintColor="#d14ba6"
                     // thumbStyle={customStyles4.thumb}
                     // trackStyle={customStyles4.track}
+                    fatigue={this.state.fatigue}
+                    onValueChange={(fatigue) => this.setState({ fatigue })}
                 />
-              <Text>Fatigue: 01</Text>
+              <Text>Fatigue: {this.percent(this.state.fatigue)}%</Text>
               <Slider
                     animateTransitions
                     minimumTrackTintColor="#d14ba6"
                     // thumbStyle={customStyles4.thumb}
                     // trackStyle={customStyles4.track}
+                    productivity={this.state.productivity}
+                    onValueChange={(productivity) => this.setState({ productivity })}
                 />
-              <Text>Product: 01</Text>
+              <Text>Productivity: {this.percent(this.state.productivity)}%</Text>
           </View>
       );
   }
