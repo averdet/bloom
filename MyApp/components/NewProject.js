@@ -4,14 +4,13 @@ import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpaci
 import axios from 'axios'
 
 function ProjectVue({ navigator }) {
-  const apiKey = "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";
+  const apiKey = require('../API_KEYS.json').OPENAI_API_KEY;
   const apiUrl = "https://api.openai.com/v1/engines/text-davinci-003/completions";
   const [data, setData] = useState([]);
   const [textInput, setTextInput] = useState('');
   const [textOutput, setTextOutput] = useState('');
   const [promptResponse, setPromptResponse] = useState('');
   const [events, setEvents] = useState([]);
-
 
   const handleCheckSend = async () => {
     setPromptResponse('');
