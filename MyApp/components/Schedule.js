@@ -133,7 +133,7 @@ renderFooter() {
           timeStyle={{textAlign: 'center', backgroundColor:'#595959', color:'white', padding:5, borderRadius:13}}
           descriptionStyle={{color:'gray'}}
           onEventPress={name => {
-            this.props.navigation.navigate("Evaluation");
+            this.props.navigation.navigate("Evaluation", {data: getData()});
           }}
           options={{
             style:{paddingTop:5},

@@ -21,9 +21,11 @@ class EvaluationVue extends Component {
   percent(value){
     return value*100;
   }
-  
 
   render() {
+    const { route } = this.props;
+    var data = route.params.data._z;
+
       return (
           <View style={styles.container}>
               <Slider
