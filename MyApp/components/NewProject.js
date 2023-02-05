@@ -4,7 +4,7 @@ import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpaci
 import axios from 'axios'
 
 function ProjectVue({ navigator }) {
-  const apiKey = OPENAI_API_KEY;
+  const apiKey = require('../API_KEYS.json').OPENAI_API_KEY;
   const apiUrl = "https://api.openai.com/v1/engines/text-davinci-003/completions";
   const [data, setData] = useState([]);
   const [textInput, setTextInput] = useState('');
