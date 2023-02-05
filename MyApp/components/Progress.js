@@ -11,21 +11,21 @@ function ProgressVue() {
       <ImageBackground blurRadius={6}  source={require('../assets/mountain.jpg')} resizeMode={'cover'}style={homeStyle.image}>
           <View style={{ padding : 10,flex: 1 , alignSelf : 'center'}}>
             <Text style={homeStyle.title}>LEVEL {level}</Text>
-            <Progress.Bar  style={{  alignSelf: 'center'}} animationType='decay' borderWidth={3} borderColor={'black'} color={'white'} progress={now} width={300} animated={true} height={25}/>
+            <Progress.Bar  style={{  alignSelf: 'center'}} animationType='decay' borderWidth={3} borderColor={'black'} color={'white'} progress={now} width={300} animated={true} height={40}/>
             <Text style={homeStyle.subtitle}>{now*100}%</Text>
             
           </View>
-          <View style={{ padding : 20,flex: 2 , alignSelf : 'center'}}>
+          <View style={{ padding : 30,flex: 2 , alignSelf : 'center', marginLeft: 10, marginRight: 10}}>
             <View style={{ padding : 10,flex: 1 , alignSelf : 'center', flexDirection:'row'}}>
               <Progress.Circle  thickness={8} borderWidth={0.2} borderColor={'grey'} color={'white'} size={80} progress={0.27} showsText={true}/>
               <Text style={homeStyle.subtitlepadw}>Complétion des tâches quotidiennes</Text>
             </View>
             <View style={{ padding : 10,flex: 1 , alignSelf : 'center', flexDirection:'row'}}>
-              <Progress.Circle thickness={8} borderWidth={0.2} borderColor={'grey'} color={'white'} size={70} progress={0.52} showsText={true}/>
+              <Progress.Circle thickness={8} borderWidth={0.2} borderColor={'grey'} color={'white'} size={70} progress={0.62} showsText={true}/>
               <Text style={homeStyle.subtitlepadw}>Productivité moyenne sur la journée</Text>
             </View>
             <View style={{ padding : 10,flex: 1, alignSelf : 'center', flexDirection:'row'}}>
-              <Progress.Circle thickness={8} borderWidth={0.2} borderColor={'grey'} color={'white'} size={70} progress={0.95} showsText={true}/>
+              <Progress.Circle thickness={8} borderWidth={0.2} borderColor={'grey'} color={'white'} size={70} progress={0.85} showsText={true}/>
               <Text style={homeStyle.subtitlepadw}>Productivité </Text>
             </View>
           </View>
