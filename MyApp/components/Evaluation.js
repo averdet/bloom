@@ -48,7 +48,14 @@ class EvaluationVue extends Component {
                     // thumbStyle={customStyles4.thumb}
                     // trackStyle={customStyles4.track}
                 />
-              <Text>Product: 01</Text>
+              <Text>Productivity: {this.percent(this.state.productivity)}%</Text>
+              <Button
+                title="Enregistrer"
+                buttonStyle={{backgroundColor:"#ffd400"}}
+                onPress={title => {
+                  this.props.navigation.goBack();
+                }}
+              />
           </View>
       );
   }
