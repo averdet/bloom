@@ -134,7 +134,6 @@ renderFooter() {
           descriptionStyle={{color:'gray'}}
           onEventPress={name => {
             this.props.navigation.navigate("Evaluation");
-            console.log(`selected button:`);
           }}
           options={{
             style:{paddingTop:5},
