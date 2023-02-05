@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, Button, ActivityIndicator } from 'react-native';
 import axios from 'axios'
 
-function ProjectVue({ navigator }) {
+function ProjectVue({ navigation, route }) {
   const apiKey = require('../API_KEYS.json').OPENAI_API_KEY;
   const apiUrl = "https://api.openai.com/v1/engines/text-davinci-003/completions";
   const [textInput, setTextInput] = useState('');
@@ -19,7 +19,7 @@ function ProjectVue({ navigator }) {
     const response = await axios.post(apiUrl, {
       prompt: prompt,
       max_tokens: 216,
-      temperature: 0.3,
+      temperature: 0.2,
     }, {
       headers: {
         'Content-Type': 'application/json',
@@ -35,11 +35,11 @@ function ProjectVue({ navigator }) {
   const handleObjectiveSend = async () => {
     setIsLoading(true);
     setPromptResponse('');
-    const prompt = `Pour atteindre l'objectif suivant ${textOutput}, un bon planning habdomadaire est le suivant, avec les durées horaires à consacrer. 
-    En appliquant le format suivant: Lundi :\n - activité 1 (durée XXhXX)\n - activité 2 (durée XXhXX)\n Mardi :\n - activité 1 (durée XXhXX)\n - activité 2 (durée XXhXX)\n etc.`;
+    const prompt = `Pour atteindre l'objectif suivant ${textOutput}, un bon planning hebdomadaire est le suivant, avec les durées horaires à consacrer. 
+    En appliquant le format suivant: Lundi :\n - activité 1 (durée XXhXX)\n Mardi :\n - activité 2 (durée XXhXX)\n etc.`;
     const response = await axios.post(apiUrl, {
       prompt: prompt,
-      max_tokens: 1024,
+      max_tokens: 1512,
       temperature: 0.1,
     }, {
       headers: {
@@ -56,7 +56,7 @@ function ProjectVue({ navigator }) {
   const extractEvents = () => {
     //console.log(promptResponse);
     const timeRegexp = /([0-1]?[0-9]|2[0-3])h([0-5][0-9])?/;
-    const wordList = promptResponse.split(/(?=[A-Z])/);
+    const wordList = promptResponse.split(/(?=[A-Z-ÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ])/);
     const dayIndexes = [-1, -1, -1, -1, -1, -1, -1];
     for (let i = 0; i < wordList.length; i++) {
       wordList[i] = wordList[i].replace("\n", "").replace(" :- ", "").replace("- ", "").replace(" : ", "");
@@ -70,17 +70,27 @@ function ProjectVue({ navigator }) {
     }
 /*     console.log(wordList);
     console.log(dayIndexes); */
-
+    console.log(wordList);
     for (let j = 0; j < dayIndexes.length; j++) {
       for (let k = dayIndexes[j]+1; k < dayIndexes[j+1]; k++) {
-        events.push({
-          'day': wordList[dayIndexes[j]],
-          'activity': wordList[k],
-          'duration': wordList[k].match(timeRegexp)[0],
-        })
+        if (wordList[k].length > 0) {
+          events.push({
+            'day': wordList[dayIndexes[j]],
+            'activity': wordList[k],
+            //'duration': wordList[k].match(timeRegexp),
+            'duration': `${j*2+7}:00`,
+          })
+        }
       }
     }
-    console.log(events);
+
+
+    for (let i = 0; i < events.length; i++) {
+      route.params.data.push(
+        {"achievement": 0, "completed": false, "description": "", "fatigue": 0, "productivity": 0, "time": events[i].duration, "title": events[i].activity}
+      );
+    }
+    navigation.goBack();
   };
 
 
