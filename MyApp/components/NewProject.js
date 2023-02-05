@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, Button } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpacity, Keyboard, ScrollView, Button, ActivityIndicator } from 'react-native';
 import axios from 'axios'
 
 function ProjectVue({ navigator }) {
@@ -10,8 +10,10 @@ function ProjectVue({ navigator }) {
   const [textOutput, setTextOutput] = useState('');
   const [promptResponse, setPromptResponse] = useState('');
   const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleCheckSend = async () => {
+    setIsLoading(true);
     setPromptResponse('');
     const prompt = `Une reformulation synthétique en une seule phrase du projet suivant ${textInput} est `;
     const response = await axios.post(apiUrl, {
@@ -27,16 +29,18 @@ function ProjectVue({ navigator }) {
     const text = response.data.choices[0].text;
     setTextOutput(text)
     setTextInput('');
+    setIsLoading(false);
   };
 
   const handleObjectiveSend = async () => {
+    setIsLoading(true);
     setPromptResponse('');
     const prompt = `Pour atteindre l'objectif suivant ${textOutput}, un bon planning habdomadaire est le suivant, avec les durées horaires à consacrer. 
     En appliquant le format suivant: Lundi :\n - activité 1 (durée XXhXX)\n - activité 2 (durée XXhXX)\n Mardi :\n - activité 1 (durée XXhXX)\n - activité 2 (durée XXhXX)\n etc.`;
     const response = await axios.post(apiUrl, {
       prompt: prompt,
       max_tokens: 1024,
-      temperature: 0.3,
+      temperature: 0.1,
     }, {
       headers: {
         'Content-Type': 'application/json',
@@ -46,6 +50,7 @@ function ProjectVue({ navigator }) {
     const text = response.data.choices[0].text;
     setPromptResponse(text)
     setTextInput('');
+    setIsLoading(false);
   };
 
   const extractEvents = () => {
@@ -78,7 +83,9 @@ function ProjectVue({ navigator }) {
     console.log(events);
   };
 
+
     return (
+      <>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         {textOutput.length < 1 ? null :
         <View style={styles.outputWrapper}>
@@ -94,7 +101,7 @@ function ProjectVue({ navigator }) {
           {promptResponse.length < 1 ? <Button
                 title="C'est bien mon objectif"
                 color='green'
-                onPress={() => handleObjectiveSend()}
+                onPress={() => {isLoading ? null : handleObjectiveSend()}}
               />:
               <View>
               <Button
@@ -105,7 +112,7 @@ function ProjectVue({ navigator }) {
               <Button
                 title="Regénérer un horaire"
                 color='red'
-                onPress={() => handleObjectiveSend()}
+                onPress={() => {isLoading ? null : handleObjectiveSend()}}
               /></View> }
 
             </View>}
@@ -114,13 +121,17 @@ function ProjectVue({ navigator }) {
           style={styles.writeTaskWrapper}
         >
             <TextInput style={styles.input} placeholder={'Décris ton projet'} value={textInput} onChangeText={text => setTextInput(text)}/>
-            <TouchableOpacity onPress={() => handleCheckSend()}>
+            <TouchableOpacity onPress={() => {isLoading ? null : handleCheckSend()}}>
             <View style={styles.submitButton}>
                 <Text style={styles.addText}>✓</Text>
             </View>
             </TouchableOpacity>
         </KeyboardAvoidingView>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        {isLoading && <ActivityIndicator size="large" />}
       </View>
+      </View>
+      </>
     );
   };
 
