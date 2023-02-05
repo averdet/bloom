@@ -14,7 +14,7 @@ import ProjectVue from './NewProject';
 import EvaluationVue from './Evaluation.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FloatingAction } from "react-native-floating-action";
-// import NewTaskVue from './NewTaskVue.js'
+import NewTaskVue from './NewTaskVue.js'
 
 const storeData = async (value) => {
   try {
@@ -168,7 +168,7 @@ renderFooter() {
         actions={actions}
         color='#541388'
         onPressItem={name => {
-          navigation.navigate("Nouvelle tâche unitaire");
+          this.props.navigation.navigate("Nouvelle tache unitaire");
         }}
         />
       </View>
@@ -209,7 +209,7 @@ function ScheduleStackVue() {
     <ScheduleStack.Navigator>
       <ScheduleStack.Screen name="Programme" component={ScheduleVue} />
       <ScheduleStack.Screen name="Evaluation" component={EvaluationVue} />
-      {/* <ScheduleStack.Screen name="Nouvelle Tâche unitaire" component={NewTaskVue}/> */}
+      <ScheduleStack.Screen name="Nouvelle tache unitaire" component={NewTaskVue}/>
     </ScheduleStack.Navigator>
   );
 }
