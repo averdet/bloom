@@ -5,7 +5,7 @@ import axios from 'axios'
 
 function ProjectVue({ navigator }) {
 
-  const apiKey = "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";
+  const apiKey = "XXXX-XXXX-XXXX";
   const apiUrl = "https://api.openai.com/v1/engines/text-davinci-003/completions";
   const [data, setData] = useState([]);
   const [textInput, setTextInput] = useState('');
@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     borderColor: '#C0C0C0',
     borderWidth: 1,
     width: 280,
+    height: 60,
   },
   output: {
     paddingVertical: 15,
