@@ -12,9 +12,48 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProjectVue from './NewProject';
 import EvaluationVue from './Evaluation.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const storeData = async (value) => {
+  try {
+    const jsonValue = JSON.stringify(value)
+    await AsyncStorage.setItem('@eventsData', jsonValue)
+  } catch (e) {
+    // saving error
+  }
+  console.log("Data stored")
+}
+
+const getData = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('@eventsData')
+    console.log(jsonValue)
+    return jsonValue != null ? jsonValue : null;
+  } catch(e) {
+    console.log("Data not extracted")
+    // error reading value
+  }
+  console.log("Data extracted")
+}
 
 
 
+
+
+function eventsToParsed(){
+  var json= require('../assets/events.json');
+  var json_length = json.length;
+  var data=[]
+  for (var i = 0; i < json_length; i++) {
+    if (json[i].description!=undefined){
+      data.push({"time":json[i].start.dateTime.slice(11,16),"title":json[i].summary,"description":json[i].description})
+    }
+    else{
+      data.push({"time":json[i].start.dateTime.slice(11,16),"title":json[i].summary,"description":""})
+    }
+   }
+   return data;
+};
 
 export class ScheduleVue extends Component {
   
@@ -24,13 +63,10 @@ export class ScheduleVue extends Component {
     this.renderFooter = this.renderFooter.bind(this)
     this.onRefresh = this.onRefresh.bind(this)
 
-    this.data = [
-      {time: '09:00', title: 'Archery Training', description: 'The Beginner Archery and Beginner Crossbow course does not require you to bring any equipment, since everything you need will be provided for the course. '},
-      {time: '10:45', title: 'Play Badminton', description: 'Badminton is a racquet sport played using racquets to hit a shuttlecock across a net.'},
-      {time: '12:00', title: 'Lunch'},
-      {time: '14:00', title: 'Watch Soccer', description: 'Team sport played between two teams of eleven players with a spherical ball. '},
-      {time: '16:30', title: 'Go to Fitness center', description: 'Look out for the Best Gym & Fitness Centers around me :)'},
-    ]
+
+    this.data = eventsToParsed();
+
+    storeData(this.data);
 
     this.state = {
       isRefreshing: false,      
@@ -49,12 +85,13 @@ export class ScheduleVue extends Component {
   } 
 
   onRefresh(){
+    console.log(getData());
     this.setState({isRefreshing: true});
     //refresh to initial data
     setTimeout(() => {
       //refresh to initial data
       this.setState({
-        data: this.data,
+        data: eventsToParsed(),
         isRefreshing: false
       });
     }, 2000);
@@ -67,21 +104,7 @@ export class ScheduleVue extends Component {
         //fetch and concat data
         setTimeout(() => {
 
-          //refresh to initial data
-          var data = this.state.data.concat(
-            [
-              {time: '18:00', title: 'Load more data', description: 'append event at bottom of timeline'},
-              {time: '18:00', title: 'Load more data', description: 'append event at bottom of timeline'},
-              {time: '18:00', title: 'Load more data', description: 'append event at bottom of timeline'},
-              {time: '18:00', title: 'Load more data', description: 'append event at bottom of timeline'},
-              {time: '18:00', title: 'Load more data', description: 'append event at bottom of timeline'}
-            ]
-            )
-
-          this.setState({
-            waiting: false,
-            data: data,
-          });
+ 
         }, 2000);
     }
   }
@@ -111,7 +134,6 @@ renderFooter() {
           descriptionStyle={{color:'gray'}}
           onEventPress={name => {
             this.props.navigation.navigate("Evaluation");
-            console.log(`selected button:`);
           }}
           options={{
             style:{paddingTop:5},

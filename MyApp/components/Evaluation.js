@@ -13,7 +13,6 @@ import ProjectVue from './NewProject';
 import Slider from '@react-native-community/slider';
 import { Button } from 'react-native-elements';
 
-
 class EvaluationVue extends Component {
   state = {
       value: 0.2,
