@@ -12,6 +12,32 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProjectVue from './NewProject';
 import EvaluationVue from './Evaluation.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const storeData = async (value) => {
+  try {
+    const jsonValue = JSON.stringify(value)
+    await AsyncStorage.setItem('@eventsData', jsonValue)
+  } catch (e) {
+    // saving error
+  }
+  console.log("Data stored")
+}
+
+const getData = async () => {
+  try {
+    const jsonValue = await AsyncStorage.getItem('@eventsData')
+    console.log(jsonValue)
+    return jsonValue != null ? jsonValue : null;
+  } catch(e) {
+    console.log("Data not extracted")
+    // error reading value
+  }
+  console.log("Data extracted")
+}
+
+
+
 
 
 function eventsToParsed(){
@@ -39,7 +65,8 @@ export class ScheduleVue extends Component {
 
 
     this.data = eventsToParsed();
-    
+
+    storeData(this.data);
 
     this.state = {
       isRefreshing: false,      
@@ -58,7 +85,7 @@ export class ScheduleVue extends Component {
   } 
 
   onRefresh(){
-    eventsToParsed();
+    console.log(getData());
     this.setState({isRefreshing: true});
     //refresh to initial data
     setTimeout(() => {
