@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
 import { VictoryBar } from "victory-native";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 function StatsVue() {
@@ -12,4 +13,14 @@ function StatsVue() {
     );
   }
 
-export default StatsVue;
+const StatsStack = createNativeStackNavigator();
+
+function StatsStackVue() {
+  return (
+    <StatsStack.Navigator>
+      <StatsStack.Screen name="Statistiques" component={StatsVue} />
+    </StatsStack.Navigator>
+  );
+}
+
+export default StatsStackVue;

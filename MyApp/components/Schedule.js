@@ -9,6 +9,7 @@ import {
   RefreshControl,
   ActivityIndicator
 } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
 export default class ScheduleVue extends Component {
@@ -128,4 +129,14 @@ const text = StyleSheet.compose(page.title);
 const container = StyleSheet.compose(page.container);
 const style = StyleSheet.compose(page);
 
-// export default ScheduleVue;
+const ScheduleStack = createNativeStackNavigator();
+
+function ScheduleStackVue() {
+  return (
+    <ScheduleStack.Navigator>
+      <ScheduleStack.Screen name="Programme" component={ScheduleVue} />
+    </ScheduleStack.Navigator>
+  );
+}
+
+export default ScheduleStackVue;
