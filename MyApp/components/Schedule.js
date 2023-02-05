@@ -10,9 +10,13 @@ import {
   ActivityIndicator
 } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ProjectVue from './NewProject';
+
+
 
 
 export class ScheduleVue extends Component {
+  
   constructor(){
     super()
     this.onEndReached = this.onEndReached.bind(this)
@@ -32,6 +36,15 @@ export class ScheduleVue extends Component {
       waiting: false,
       data: this.data
     }
+
+    this.actions = [
+      {
+        text: "Evaluation",
+        icon: require("../images/ic_accessibility_white.png"),
+        name: "bt_accessibility",
+        position: 1
+      }
+    ];
   } 
 
   onRefresh(){
@@ -95,6 +108,10 @@ renderFooter() {
           timeContainerStyle={{minWidth:52, marginTop: -5}}
           timeStyle={{textAlign: 'center', backgroundColor:'#595959', color:'white', padding:5, borderRadius:13}}
           descriptionStyle={{color:'gray'}}
+          onEventPress={name => {
+            this.props.navigation.navigate("Evaluation");
+            console.log(`selected button:`);
+          }}
           options={{
             style:{paddingTop:5},
             refreshControl: (
@@ -135,6 +152,7 @@ function ScheduleStackVue() {
   return (
     <ScheduleStack.Navigator>
       <ScheduleStack.Screen name="Programme" component={ScheduleVue} />
+      <ScheduleStack.Screen name="Evaluation" component={ProjectVue} />
     </ScheduleStack.Navigator>
   );
 }
