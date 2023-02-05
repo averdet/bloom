@@ -4,18 +4,17 @@ import { KeyboardAvoidingView, StyleSheet, Text, View, TextInput, TouchableOpaci
 import axios from 'axios'
 
 function ProjectVue({ navigator }) {
-
-  const apiKey = "XXXX-XXXX-XXXX";
+  const apiKey = "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";
   const apiUrl = "https://api.openai.com/v1/engines/text-davinci-003/completions";
   const [data, setData] = useState([]);
   const [textInput, setTextInput] = useState('');
-  const [textPrompt, setTextPrompt] = useState('');
   const [textOutput, setTextOutput] = useState('');
   const [promptResponse, setPromptResponse] = useState('');
   const [events, setEvents] = useState([]);
 
 
   const handleCheckSend = async () => {
+    setPromptResponse('');
     const prompt = `Une reformulation synthétique en une seule phrase du projet suivant ${textInput} est `;
     console.log(prompt);
     const response = await axios.post(apiUrl, {
@@ -37,7 +36,8 @@ function ProjectVue({ navigator }) {
 
   const handleObjectiveSend = async () => {
     setPromptResponse('');
-    const prompt = `Pour atteindre l'objectif suivant ${textOutput}, un bon planning habdomadaire est le suivant, avec les durées horaires à consacrer. En appliquant le format suivant: Lundi : - activité 1 (durée XXhXX) - activité 2 (durée XXhXX) / Mardi : - activité 1 (durée XXhXX) - activité 2 (durée XXhXX) etc.`;
+    const prompt = `Pour atteindre l'objectif suivant ${textOutput}, un bon planning habdomadaire est le suivant, avec les durées horaires à consacrer. 
+    En appliquant le format suivant: Lundi :\n - activité 1 (durée XXhXX)\n - activité 2 (durée XXhXX)\n Mardi :\n - activité 1 (durée XXhXX)\n - activité 2 (durée XXhXX)\n etc.`;
     console.log(prompt);
     const response = await axios.post(apiUrl, {
       prompt: prompt,
@@ -54,7 +54,6 @@ function ProjectVue({ navigator }) {
     console.log(`API Call Reponse: ${text}`)
     setData([...data, {type: 'user', 'text': textInput}, {type: 'bot', 'text': textInput}]);
     setTextInput('');
-    extractEvents();
   };
 
   const extractEvents = () => {
@@ -83,7 +82,36 @@ function ProjectVue({ navigator }) {
 
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <KeyboardAvoidingView 
+        {textOutput.length < 1 ? null :
+        <View style={styles.outputWrapper}>
+          {promptResponse.length < 1 ? <Text style={styles.output} numberOfLines={25}>
+                Peux-tu confirmer que j'ai bien compris ton objectif:
+              {textOutput}
+              </Text>: 
+              <Text style={styles.output} numberOfLines={25}>
+                Voici un planning pour t'aider à atteindre ton objectif:
+              {promptResponse}
+              </Text> }
+
+          {promptResponse.length < 1 ? <Button
+                title="C'est bien mon objectif"
+                color='green'
+                onPress={() => handleObjectiveSend()}
+              />:
+              <View>
+              <Button
+                title="L'intégrer à mon calendrier"
+                color='orange'
+                onPress={() => extractEvents()}
+              />
+              <Button
+                title="Regénérer un horaire"
+                color='red'
+                onPress={() => handleObjectiveSend()}
+              /></View> }
+
+            </View>}
+            <KeyboardAvoidingView 
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.writeTaskWrapper}
         >
@@ -94,22 +122,6 @@ function ProjectVue({ navigator }) {
             </View>
             </TouchableOpacity>
         </KeyboardAvoidingView>
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          {promptResponse.length < 1 ?               <Text style={styles.output} numberOfLines={25}>
-                Peux-tu confirmer que j'ai bien compris ton objectif:
-              {textOutput}
-              </Text>: 
-              <Text style={styles.output} numberOfLines={25}>
-              {promptResponse}
-              </Text> }
-
-
-              <Button
-                title="C'est bien mon objectif"
-                color='green'
-                onPress={() => handleObjectiveSend()}
-              />
-            </View>
       </View>
     );
   };
@@ -121,7 +133,7 @@ const styles = StyleSheet.create({
   },
   writeTaskWrapper: {
     position: 'absolute',
-    bottom: 60,
+    bottom: 20,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -136,6 +148,12 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: 280,
     height: 60,
+  },
+  outputWrapper: {
+    position: 'absolute',
+    top: 10,
+    width: '100%',
+    height: '100%',
   },
   output: {
     paddingVertical: 15,
