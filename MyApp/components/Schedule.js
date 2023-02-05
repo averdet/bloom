@@ -13,6 +13,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProjectVue from './NewProject';
 import EvaluationVue from './Evaluation.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FloatingAction } from "react-native-floating-action";
+// import NewTaskVue from './NewTaskVue.js'
 
 const storeData = async (value) => {
   try {
@@ -84,6 +86,20 @@ export class ScheduleVue extends Component {
     ];
   } 
 
+  stateTask = function(time) {
+    var timePassed = false
+    var isUncompleted = false
+    if (timePassed && !isUncompleted){
+      return {backgroundColor: '#541388',innerCircle: 'none'}
+    }
+    else if (timePassed && isUncompleted){
+      return {backgroundColor: '#ffd400',innerCircle: 'none'}
+    }
+    else {
+      return {backgroundColor: '#541388',innerCircle: 'dot'}
+    }
+  }
+
   onRefresh(){
     console.log(getData());
     this.setState({isRefreshing: true});
@@ -127,7 +143,7 @@ renderFooter() {
           style={styles.list}
           data={this.state.data}
           circleSize={20}
-          circleColor='#541388'
+          circleColor= {this.stateTask(this.state.data.time).backgroundColor}
           lineColor='#2e294e'
           timeContainerStyle={{minWidth:52, marginTop: -5}}
           timeStyle={{textAlign: 'center', backgroundColor:'#595959', color:'white', padding:5, borderRadius:13}}
@@ -146,12 +162,29 @@ renderFooter() {
             renderFooter: this.renderFooter,
             onEndReached: this.onEndReached
           }}
-          innerCircle={'dot'}
+          innerCircle={this.stateTask().innerCircle}
+        />
+        <FloatingAction
+        actions={actions}
+        color='#541388'
+        onPressItem={name => {
+          navigation.navigate("Nouvelle tâche unitaire");
+        }}
         />
       </View>
     );
   }
 }
+
+const actions = [
+  {
+    text: "Nouvelle tâche unitaire",
+    icon: require("../images/ic_accessibility_white.png"),
+    name: "bt_language",
+    position: 2,
+    color: '#541388'
+  }
+];
 
 const styles = StyleSheet.create({
   container: {
@@ -162,7 +195,7 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     marginTop:20,
-  },
+  }
 });
 
 const text = StyleSheet.compose(page.title);
@@ -176,6 +209,7 @@ function ScheduleStackVue() {
     <ScheduleStack.Navigator>
       <ScheduleStack.Screen name="Programme" component={ScheduleVue} />
       <ScheduleStack.Screen name="Evaluation" component={EvaluationVue} />
+      {/* <ScheduleStack.Screen name="Nouvelle Tâche unitaire" component={NewTaskVue}/> */}
     </ScheduleStack.Navigator>
   );
 }
