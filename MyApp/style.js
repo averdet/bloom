@@ -2,23 +2,28 @@
 import { StyleSheet } from 'react-native';
 
 const page = StyleSheet.create({
+    title: {
+      marginTop: 8,
+      color: '$gray',
+      textAlign: 'left',
+      fontSize: 20,
+      fontWeight: 'bold',
+      font: 'Helvetica',
+    },
     container: {
       flex: 1,
       padding: 24,
-      backgroundColor: '#fff',
-    },
-    title: {
-      marginTop: 16,
-      paddingVertical: 8,
-      borderWidth: 4,
-      borderColor: '#20232a',
-      borderRadius: 6,
-      backgroundColor: '#61dafb',
-      color: '#20232a',
-      textAlign: 'center',
-      fontSize: 30,
-      fontWeight: 'bold'
+      backgroundColor: '$fakeWhite',
     },
   });
 
 export{page}
+
+export const COLORS = {
+  grey: '#595959',
+  main: '#541388',
+  pink: '#d90368',
+  blue: '#2e294e',
+  yellowColor: '#ffd400',
+  fakeWhite: '#E7E4DF',
+}
