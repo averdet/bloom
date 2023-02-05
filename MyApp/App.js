@@ -12,7 +12,7 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Navigator screenOptions={screenOptions} >
         <Tab.Screen name="AccueilStack" component={HomeStackVue}/>
         <Tab.Screen name="ProgrammeStack" component={ScheduleStackVue}/>
         <Tab.Screen name="ProgrèsStack" component={ProgressStackVue} />
@@ -20,4 +20,10 @@ export default function App() {
       </Tab.Navigator>
     </NavigationContainer>
   );
+}
+
+const screenOptions = {
+  tabBarStyle:{
+    backgroundColor:'rgba(42,42,50, 0.6)'
+  }
 }
