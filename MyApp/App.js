@@ -6,7 +6,6 @@ import ScheduleVue from './components/Schedule';
 import HomeVue from './components/Home';
 import StatsVue from './components/Stats';
 import ProgressVue from './components/Progress';
-import { format } from 'react-string-format';
 
 const Tab = createBottomTabNavigator();
 
