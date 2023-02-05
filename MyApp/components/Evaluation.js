@@ -11,6 +11,7 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProjectVue from './NewProject';
 import Slider from '@react-native-community/slider';
+import { Button } from 'react-native-elements';
 
 
 class EvaluationVue extends Component {
@@ -53,6 +54,10 @@ class EvaluationVue extends Component {
                     onValueChange={(productivity) => this.setState({ productivity })}
                 />
               <Text>Productivity: {this.percent(this.state.productivity)}%</Text>
+              <Button
+                title="Enregistrer"
+                buttonStyle={{backgroundColor:"#ffd400"}}
+              />
           </View>
       );
   }
@@ -63,7 +68,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    justifyContent: 'center',
   },
 });
 
