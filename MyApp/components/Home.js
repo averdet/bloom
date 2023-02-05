@@ -1,34 +1,24 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
+import { ProgressViewIOSComponent, Text, View } from 'react-native';
 import { FloatingAction } from "react-native-floating-action";
+import ProjectVue from './NewProject';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
-function HomeVue() {
+function DefaultHomeVue({ navigation }) {
   const name = "Bob";
   const actions = [
     {
-      text: "Accessibility",
+      text: "Nouveau projet",
       icon: require("../images/ic_accessibility_white.png"),
       name: "bt_accessibility",
-      position: 2
-    },
-    {
-      text: "Language",
-      icon: require("../images/ic_accessibility_white.png"),
-      name: "bt_language",
       position: 1
     },
     {
-      text: "Location",
+      text: "Nouvelle tâche unitaire",
       icon: require("../images/ic_accessibility_white.png"),
-      name: "bt_room",
-      position: 3
-    },
-    {
-      text: "Video",
-      icon: require("../images/ic_accessibility_white.png"),
-      name: "bt_videocam",
-      position: 4
+      name: "bt_language",
+      position: 2
     }
   ];
   return (
@@ -37,6 +27,7 @@ function HomeVue() {
       <FloatingAction
         actions={actions}
         onPressItem={name => {
+          navigation.navigate("Nouveau Projet");
           console.log(`selected button: ${name}`);
         }}
       />
@@ -44,4 +35,15 @@ function HomeVue() {
   );
 }
 
-export default HomeVue;
+const HomeStack = createNativeStackNavigator();
+
+function HomeStackVue() {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen name="Accueil" component={DefaultHomeVue} />
+      <HomeStack.Screen name="Nouveau Projet" component={ProjectVue} />
+    </HomeStack.Navigator>
+  );
+}
+
+export default HomeStackVue;

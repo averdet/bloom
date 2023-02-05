@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Timeline from 'react-native-timeline-flatlist';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 function ScheduleVue() {
     return(
@@ -15,4 +16,14 @@ function ScheduleVue() {
     )
   }
 
-export default ScheduleVue;
+const ScheduleStack = createNativeStackNavigator();
+
+function ScheduleStackVue() {
+  return (
+    <ScheduleStack.Navigator>
+      <ScheduleStack.Screen name="Programme" component={ScheduleVue} />
+    </ScheduleStack.Navigator>
+  );
+}
+
+export default ScheduleStackVue;

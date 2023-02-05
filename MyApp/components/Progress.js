@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 function ProgressVue() {
     return (
@@ -9,4 +10,14 @@ function ProgressVue() {
     );
   }
 
-export default ProgressVue;
+const ProgressStack = createNativeStackNavigator();
+
+function ProgressStackVue() {
+  return (
+    <ProgressStack.Navigator>
+      <ProgressStack.Screen name="Progrès" component={ProgressVue} />
+    </ProgressStack.Navigator>
+  );
+}
+
+export default ProgressStackVue;
