@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ProjectVue from './NewProject';
+import EvaluationVue from './Evaluation.js';
 
 
 
@@ -152,7 +153,7 @@ function ScheduleStackVue() {
   return (
     <ScheduleStack.Navigator>
       <ScheduleStack.Screen name="Programme" component={ScheduleVue} />
-      <ScheduleStack.Screen name="Evaluation" component={ProjectVue} />
+      <ScheduleStack.Screen name="Evaluation" component={EvaluationVue} />
     </ScheduleStack.Navigator>
   );
 }

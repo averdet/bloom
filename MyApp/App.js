@@ -17,7 +17,14 @@ export default function App() {
         <Tab.Screen name="Programme" component={ScheduleStackVue}/>
         <Tab.Screen name="Progrès" component={ProgressStackVue} />
         <Tab.Screen name="Stats" component={StatsStackVue} />
+
       </Tab.Navigator>
     </NavigationContainer>
   );
+}
+
+const screenOptions = {
+  tabBarStyle:{
+    backgroundColor:'rgba(42,42,50, 0.6)'
+  }
 }

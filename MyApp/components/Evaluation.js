@@ -17,6 +17,10 @@ class EvaluationVue extends Component {
   state = {
       value: 0.2,
   };
+
+  percent(value){
+    return value*100;
+  }
   
 
   render() {
@@ -25,22 +29,24 @@ class EvaluationVue extends Component {
               <Slider
                     animateTransitions
                     minimumTrackTintColor="#d14ba6"
-                    thumbStyle={customStyles4.thumb}
-                    trackStyle={customStyles4.track}
+                    // thumbStyle={customStyles4.thumb}
+                    // trackStyle={customStyles4.track}
+                    value={this.state.value}
+                    onValueChange={(value) => this.setState({ value })}
                 />
-              <Text>Achievement: 01</Text>
+              <Text>Achievement: {this.percent(this.state.value)} %</Text>
               <Slider
                     animateTransitions
                     minimumTrackTintColor="#d14ba6"
-                    thumbStyle={customStyles4.thumb}
-                    trackStyle={customStyles4.track}
+                    // thumbStyle={customStyles4.thumb}
+                    // trackStyle={customStyles4.track}
                 />
               <Text>Fatigue: 01</Text>
               <Slider
                     animateTransitions
                     minimumTrackTintColor="#d14ba6"
-                    thumbStyle={customStyles4.thumb}
-                    trackStyle={customStyles4.track}
+                    // thumbStyle={customStyles4.thumb}
+                    // trackStyle={customStyles4.track}
                 />
               <Text>Product: 01</Text>
           </View>
