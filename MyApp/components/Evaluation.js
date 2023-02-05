@@ -60,7 +60,7 @@ class EvaluationVue extends Component {
                     achievement={this.state.achievement}
                     onValueChange={(achievement) => this.setState({ achievement })}
                 />
-              <Text>Achievement: {Math.round(this.percent(this.state.achievement))}%</Text>
+              <Text>Complétion: {Math.round(this.percent(this.state.achievement))}%</Text>
               <Slider
                     animateTransitions
                     minimumTrackTintColor="#d14ba6"
@@ -80,7 +80,7 @@ class EvaluationVue extends Component {
                     productivity={this.state.productivity}
                     onValueChange={(productivity) => this.setState({ productivity })}
                 />
-              <Text>Productivity: {Math.round(this.percent(this.state.productivity))}%</Text>
+              <Text>Productivité: {Math.round(this.percent(this.state.productivity))}%</Text>
               <Button
                 title="Enregistrer"
                 buttonStyle={{backgroundColor:"#ffd400"}}

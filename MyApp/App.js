@@ -24,17 +24,17 @@ export default function App() {
             // tabBarLabelPosition​: 'beside-icon',
     }}>
         <Tab.Screen name="Accueil" component={HomeStackVue} options={{tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="home" color={color} size={size} />
+            <MaterialCommunityIcons name="rocket" color={color} size={size} />
           ),}}/>
         <Tab.Screen name="Programme" component={ScheduleStackVue} options={{tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="calendar" color={color} size={size} />
           ),}}/>
-        <Tab.Screen name="Progrès" component={ProgressStackVue} options={{tabBarIcon: ({ color, size }) => (
+{/*         <Tab.Screen name="Progrès" component={ProgressStackVue} options={{tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="rocket" color={color} size={size} />
-          ),}}/>
-        <Tab.Screen name="Stats" component={StatsStackVue} options={{tabBarIcon: ({ color, size }) => (
+          ),}}/> */}
+{/*         <Tab.Screen name="Stats" component={StatsStackVue} options={{tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="chart-line" color={color} size={size} />
-          ),}}/>
+          ),}}/> */}
 
       </Tab.Navigator>
     </NavigationContainer>

@@ -40,7 +40,7 @@ function ProjectVue({ navigation, route }) {
     const response = await axios.post(apiUrl, {
       prompt: prompt,
       max_tokens: 1512,
-      temperature: 0.1,
+      temperature: 0.8,
     }, {
       headers: {
         'Content-Type': 'application/json',
