@@ -1,13 +1,27 @@
 # ReadMe - Bloom
 
-Blum est une application mobile (iOS et android) d'aide à la gestion du temps. 
+Blum est une application mobile (iOS et android) d.
 
 ## Description
+### Inspiration
 
+### What that's do
+
+### How it works
+The frontend is a mobile application (Android and iOS) developed in React Native.
 
 ## Getting Started
 
 ### Dependencies
+
+### Difficulties met
+This weekend was our very first Hackathon experience. We took advantage of new technologies. So we started from scratch to learn React Native, communication with Google Api and ŕegular expressions. Numerous mistakes and long hours of debugging punctuated our weekend.
+
+### What we proud of
+
+## What's next ?
+
+
 ### Installing
 ```bash
 git clone https://github.com/averdet/rename_hackathon_23.git
@@ -23,7 +37,7 @@ npm start
 ```
 
 ## Authors
-Contributors : 
+Contributors :
 - [Alexandre Verdet](https://github.com/averdet)
 - [Benjamin Teyssier](https://github.com/benjaminteyssier)
 - [Ryan Kaoukeb](https://github.com/RyanKaoukeb)
@@ -34,6 +48,4 @@ Copyright (c) [2023]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+"README.md" [noeol] 53L, 2069B 
