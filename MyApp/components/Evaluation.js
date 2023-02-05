@@ -57,6 +57,9 @@ class EvaluationVue extends Component {
               <Button
                 title="Enregistrer"
                 buttonStyle={{backgroundColor:"#ffd400"}}
+                onPress={title => {
+                  this.props.navigation.goBack();
+                }}
               />
           </View>
       );
