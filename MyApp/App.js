@@ -13,10 +13,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen name="AccueilStack" component={HomeStackVue}/>
-        <Tab.Screen name="ProgrammeStack" component={ScheduleStackVue}/>
-        <Tab.Screen name="ProgrèsStack" component={ProgressStackVue} />
-        <Tab.Screen name="StatsStack" component={StatsStackVue} />
+        <Tab.Screen name="Accueil" component={HomeStackVue}/>
+        <Tab.Screen name="Programme" component={ScheduleStackVue}/>
+        <Tab.Screen name="Progrès" component={ProgressStackVue} />
+        <Tab.Screen name="Stats" component={StatsStackVue} />
       </Tab.Navigator>
     </NavigationContainer>
   );
