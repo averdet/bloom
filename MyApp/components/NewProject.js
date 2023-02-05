@@ -37,7 +37,7 @@ function ProjectVue({ navigator }) {
 
   const handleObjectiveSend = async () => {
     setPromptResponse('');
-    const prompt = `Pour atteindre l'objectif suivant ${textOutput}, un bon planning habdomadaire est le suivant, avec les durées horaires à consacrer. Ennonce seulement et simplement quoi faire chaque jour pendant quelle durée `;
+    const prompt = `Pour atteindre l'objectif suivant ${textOutput}, un bon planning habdomadaire est le suivant, avec les durées horaires à consacrer. En appliquant le format suivant: Lundi : - activité 1 (durée XXhXX) - activité 2 (durée XXhXX) / Mardi : - activité 1 (durée XXhXX) - activité 2 (durée XXhXX) etc.`;
     console.log(prompt);
     const response = await axios.post(apiUrl, {
       prompt: prompt,
@@ -58,11 +58,27 @@ function ProjectVue({ navigator }) {
   };
 
   const extractEvents = () => {
-    const extractedEvents = textOutput.match(
-      /\b\d{1,2}\/\d{1,2}\/\d{4}\b/g
-    );
-    setEvents(extractedEvents);
-    console.log(extractEvents);
+    const timeRegexp = /([0-1]?[0-9]|2[0-3])h[0-5][0-9]/;
+    const wordList = promptResponse.split("/");
+    console.log(wordList);
+    const dayIndexes = [-1, -1, -1, -1, -1, -1, -1];
+    for (let i = 0; i < wordList.length; i++) {
+      wordList[i] = wordList[i].trim();
+      if (wordList[i] == "Lundi") {dayIndexes[0] = i}
+      else if (wordList[i] == "Mardi") {dayIndexes[1] = i}
+      else if (wordList[i] == "Mercredi") {dayIndexes[2] = i}
+      else if (wordList[i] == "Jeudi") {dayIndexes[3] = i}
+      else if (wordList[i] == "Vendredi") {dayIndexes[4] = i}
+      else if (wordList[i] == "Samedi") {dayIndexes[5] = i}
+      else if (wordList[i] == "Dimanche") {dayIndexes[6] = i}
+    }
+    for (let j = 0; j < dayIndexes.length; j++) {
+      events.push({
+        'day': wordList[dayIndexes[j]],
+        'duration': wordList.slice(dayIndexes[j]+1,dayIndexes[j+1]).join().match(timeRegexp),
+        'activity': wordList.slice(dayIndexes[j]+1,dayIndexes[j+1]).join(),
+      })
+    }
   };
 
     return (
