@@ -29,8 +29,8 @@ class EvaluationVue extends Component {
               <Slider
                     animateTransitions
                     minimumTrackTintColor="#d14ba6"
-                    thumbStyle={customStyles4.thumb}
-                    trackStyle={customStyles4.track}
+                    // thumbStyle={customStyles4.thumb}
+                    // trackStyle={customStyles4.track}
                     value={this.state.value}
                     onValueChange={(value) => this.setState({ value })}
                 />
@@ -38,15 +38,15 @@ class EvaluationVue extends Component {
               <Slider
                     animateTransitions
                     minimumTrackTintColor="#d14ba6"
-                    thumbStyle={customStyles4.thumb}
-                    trackStyle={customStyles4.track}
+                    // thumbStyle={customStyles4.thumb}
+                    // trackStyle={customStyles4.track}
                 />
               <Text>Fatigue: 01</Text>
               <Slider
                     animateTransitions
                     minimumTrackTintColor="#d14ba6"
-                    thumbStyle={customStyles4.thumb}
-                    trackStyle={customStyles4.track}
+                    // thumbStyle={customStyles4.thumb}
+                    // trackStyle={customStyles4.track}
                 />
               <Text>Product: 01</Text>
           </View>
