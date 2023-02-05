@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from 'react-native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
+import { VictoryBar,VictoryPie, VictoryChart, VictoryTheme } from "victory-native";
 
 const data = [
   { quarter: 1, earnings: 60 },
@@ -17,12 +17,23 @@ const StatsStack = createNativeStackNavigator();
 export default class StatsStackVue extends React.Component {
   render() {
     return (
+      
       <View style={styles.container}>
-        <VictoryChart width={350} theme={VictoryTheme.material}>
+        <VictoryChart width={300} height={250} theme={VictoryTheme.material}>
           <VictoryBar data={data} x="quarter" y="earnings" />
         </VictoryChart>
+        
+        <VictoryPie
+          data={[
+            { x: "Cats", y: 35 },
+            { x: "Dogs", y: 40 },
+            { x: "Birds", y: 55 }
+                ]} radius={80}
+            />
         <Text style={styles.title}>Productivité moyenne au cours de la semaine</Text>
       </View>
+      
+      
     );
   }
 }
@@ -32,19 +43,20 @@ const styles = StyleSheet.create({
     padding:30,
     flex: 1,
     justifyContent: "center",
+    
     alignItems: "center",
     backgroundColor: "#f5fcff"
   },
   title: {
-    padding:20,
+    
     color:'#2e294e',
     fontWeight:'500',
     textAlign: 'center',
     border: '1px solid red',
-    fontSize: 20,
-    textAlignVertical:'top',
+    fontSize: 11,
+    
     verticalAlign:'top',
-    marginTop: 10
+    marginTop: 0
   }
 });
 
