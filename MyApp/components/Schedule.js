@@ -12,7 +12,7 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
-export default class ScheduleVue extends Component {
+export class ScheduleVue extends Component {
   constructor(){
     super()
     this.onEndReached = this.onEndReached.bind(this)
